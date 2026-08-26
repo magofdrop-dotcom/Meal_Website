@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Family Recipe Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream:    #fdf8f2;
+      --paper:    #f5ede0;
+      --warm:     #e8d5bb;
+      --accent:   #c0622f;
+      --accent2:  #8b3a1a;
+      --green:    #4a7c59;
+      --text:     #2c1e10;
+      --muted:    #7a6352;
+      --card:     #fffaf4;
+      --shadow:   rgba(100, 60, 20, 0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HERO HEADER ── */
+    .hero {
+      background: linear-gradient(160deg, #3b1f0c 0%, #7a3b18 60%, #c0622f 100%);
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: #fff;
+      letter-spacing: 0.02em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .hero p {
+      color: rgba(255,255,255,0.75);
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      font-style: italic;
+      font-family: 'Playfair Display', serif;
+      position: relative;
+    }
+
+    /* ── FAMILY PHOTOS ── */
+    .photos-strip {
+      background: var(--paper);
+      padding: 2rem 1.5rem;
+      border-bottom: 2px solid var(--warm);
+    }
+    .photos-strip h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--accent2);
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+    .photos-grid {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .photo-frame {
+      position: relative;
+      background: #fff;
+      padding: 8px 8px 32px;
+      box-shadow: 0 4px 16px var(--shadow), 0 1px 3px rgba(0,0,0,0.08);
+      transform: rotate(var(--tilt, -1.5deg));
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+      width: 160px;
+    }
+    .photo-frame:hover {
+      transform: rotate(0deg) scale(1.05);
+      box-shadow: 0 8px 28px rgba(100,60,20,0.2);
+      z-index: 2;
+    }
+    .photo-frame:nth-child(1) { --tilt: -2deg; }
+    .photo-frame:nth-child(2) { --tilt:  1.5deg; }
+    .photo-frame:nth-child(3) { --tilt: -1deg; }
+    .photo-frame:nth-child(4) { --tilt:  2.5deg; }
+    .photo-frame img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      display: block;
+      border: 1px solid #e8e0d5;
+    }
+    .photo-caption {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* ── TAB NAV ── */
+    .tab-nav {
+      display: flex;
+      gap: 0;
+      background: var(--paper);
+      border: 2px solid var(--warm);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.85rem 1rem;
+      border: none;
+      background: transparent;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+      border-right: 1px solid var(--warm);
+    }
+    .tab-btn:last-child { border-right: none; }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .tab-btn:hover:not(.active) {
+      background: var(--warm);
+      color: var(--accent2);
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border: 1.5px solid var(--warm);
+      border-radius: 14px;
+      padding: 2rem;
+      box-shadow: 0 3px 16px var(--shadow);
+      display: none;
+      animation: fadeUp 0.35s ease;
+    }
+    .card.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--accent2);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ── FORM ELEMENTS ── */
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid var(--warm);
+      border-radius: 8px;
+      background: #fff;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      margin-bottom: 1rem;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(192,98,47,0.12);
+    }
+    textarea { resize: vertical; }
+
+    .form-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .form-row > * { flex: 1; min-width: 200px; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(192,98,47,0.3);
+    }
+    .btn-primary:hover { background: var(--accent2); box-shadow: 0 5px 16px rgba(139,58,26,0.35); }
+    .btn-success {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(74,124,89,0.3);
+    }
+    .btn-success:hover { background: #3a6347; }
+    .btn-secondary {
+      background: var(--warm);
+      color: var(--text);
+    }
+    .btn-secondary:hover { background: #d9c4a8; }
+    .btn-sm {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+    }
+    .btn-danger { background: #c0392b; color: #fff; }
+    .btn-danger:hover { background: #96281b; }
+    .btn-edit { background: #e6a817; color: #fff; }
+    .btn-edit:hover { background: #c9911a; }
+
+    /* ── MESSAGES ── */
+    .msg {
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+    .msg.success { background: #edf7f0; border: 1.5px solid #82c99a; color: #2d6e40; display: block; }
+    .msg.error   { background: #fdf1f0; border: 1.5px solid #e8a09a; color: #8b2317; display: block; }
+
+    /* ── RANDOM MEAL RESULT ── */
+    .meal-result {
+      margin-top: 1.5rem;
+      background: linear-gradient(135deg, #fdf3e7, #fae8d0);
+      border: 2px solid var(--warm);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: none;
+    }
+    .meal-result.show { display: block; animation: fadeUp 0.3s ease; }
+    .meal-result .meal-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+    .recipe-section { margin-bottom: 0.75rem; }
+    .recipe-section strong {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+    .recipe-section p { color: var(--text); line-height: 1.6; }
+
+    /* ── MEAL LIST ── */
+    .category-section { margin-bottom: 2rem; }
+    .category-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--accent2);
+      border-bottom: 2px solid var(--warm);
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.75rem;
+      text-transform: capitalize;
+    }
+    .meal-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0.9rem;
+      background: #fff;
+      border: 1.5px solid var(--warm);
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      gap: 0.5rem;
+    }
+    .meal-item span { font-weight: 400; flex: 1; }
+    .meal-item .actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(44, 30, 16, 0.55);
+      backdrop-filter: blur(3px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 2rem;
+      width: min(520px, 92vw);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      transform: translateY(20px);
+      transition: transform 0.25s;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--accent2);
+      margin-bottom: 1.25rem;
+    }
+    .modal-footer {
+      display: flex; gap: 0.75rem; justify-content: flex-end;
+      margin-top: 1.25rem;
+    }
+
+    /* ── SEARCH RESULT ── */
+    .search-result {
+      margin-top: 1.25rem;
+      background: #fff;
+      border: 1.5px solid var(--warm);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: none;
+    }
+    .search-result.show { display: block; animation: fadeUp 0.3s ease; }
+    .search-result .sr-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--accent2);
+      margin-bottom: 0.75rem;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1.5px;
+      background: linear-gradient(to right, transparent, var(--warm), transparent);
+      margin: 1.5rem 0;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="hero">
+  <h1>📖 Our Family Recipe Book</h1>
+  <p>Gathering the meals we love, one dish at a time</p>
+</div>
+
+<!-- ── FAMILY PHOTOS ── -->
+<div class="photos-strip">
+  <h2>Made with love by our family ♥</h2>
+  <div class="photos-grid">
+    <div class="photo-frame">
+      <img src="/static/Jamaica_Patty.jpg" alt="Family photo" onerror="this.src='https://placehold.co/144x130/e8d5bb/7a6352?text=Family+Photo'" />
+      <div class="photo-caption">Jamaica Patty</div>
+    </div>
+    <div class="photo-frame">
+      <img src="/static/Iron_Toast.jpg" alt="Family cooking" onerror="this.src='https://placehold.co/144x130/d5c4a8/7a6352?text=In+the+Kitchen'" />
+      <div class="photo-caption">MTC Toast</div>
+    </div>
+    <div class="photo-frame">
+<img src="/static/Hot_Dog.jpg" alt="Family meal" 
+     style="object-position: center 70%"
+     onerror="this.src='https://placehold.co/144x130/c9b89a/7a6352?text=Family+Meal'" />      <div class="photo-caption">Virtual Food</div>
+    </div>
+    <div class="photo-frame">
+      <img src="/static/Rachel.jpg" alt="Family gathering" onerror="this.src='https://placehold.co/144x130/bfad8e/7a6352?text=Good+Times'" />
+      <div class="photo-caption">Chefs Approval</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="main-wrap">
+
+  <!-- TAB NAV -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" onclick="showTab('discover')">✨ Discover</button>
+    <button class="tab-btn" onclick="showTab('add')">➕ Add Recipe</button>
+    <button class="tab-btn" onclick="showTab('search')">🔍 Search</button>
+    <button class="tab-btn" onclick="showTab('list')">📋 All Recipes</button>
+  </nav>
+
+  <!-- TAB: DISCOVER -->
+  <div class="card active" id="tab-discover">
+    <h2>✨ What should we make?</h2>
+    <div class="form-row">
+      <div>
+        <label for="mealType">Meal Type</label>
+        <select id="mealType">
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch">Lunch</option>
+          <option value="dinner">Dinner</option>
+          <option value="dessert">Dessert</option>
+          <option value="bread and muffins">Bread & Muffins</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:flex-end;padding-bottom:1rem;">
+        <button class="btn btn-primary" onclick="getMealIdea()" style="width:100%">🎲 Surprise Me!</button>
+      </div>
+    </div>
+    <div class="meal-result" id="mealResult">
+      <div class="meal-name" id="resultMealName"></div>
+      <div class="divider"></div>
+      <div class="recipe-section">
+        <strong>🥕 Ingredients</strong>
+        <p id="resultIngredients"></p>
+      </div>
+      <div class="recipe-section">
+        <strong>👩‍🍳 Instructions</strong>
+        <p id="resultInstructions"></p>
+      </div>
+      <div class="recipe-section" id="resultNotesWrap">
+        <strong>📝 Notes</strong>
+        <p id="resultNotes"></p>
+      </div>
+    </div>
+    <div class="msg" id="discoverMsg"></div>
+  </div>
+
+  <!-- TAB: ADD RECIPE -->
+  <div class="card" id="tab-add">
+    <h2>➕ Add a New Recipe</h2>
+    <div class="form-row">
+      <div>
+        <label for="addMealName">Meal Name</label>
+        <input type="text" id="addMealName" placeholder="e.g. Grandma's Lasagna" maxlength="100" />
+      </div>
+      <div>
+        <label for="addMealType">Category</label>
+        <select id="addMealType">
+          <option value="breakfast">Breakfast</option>
+          <option value="lunch">Lunch</option>
+          <option value="dinner">Dinner</option>
+          <option value="dessert">Dessert</option>
+          <option value="bread and muffins">Bread & Muffins</option>
+        </select>
+      </div>
+    </div>
+    <label for="addIngredients">Ingredients</label>
+    <textarea id="addIngredients" rows="3" placeholder="List all ingredients..."></textarea>
+    <label for="addInstructions">Instructions</label>
+    <textarea id="addInstructions" rows="4" placeholder="Step-by-step instructions..."></textarea>
+    <label for="addNotes">Notes (optional)</label>
+    <textarea id="addNotes" rows="2" placeholder="Tips, variations, serving suggestions..."></textarea>
+    <button class="btn btn-success" onclick="addMeal()">Save Recipe</button>
+    <div class="msg" id="addMsg"></div>
+  </div>
+
+  <!-- TAB: SEARCH -->
+  <div class="card" id="tab-search">
+    <h2>🔍 Find a Recipe</h2>
+    <div style="display:flex;gap:0.75rem;align-items:flex-end;">
+      <div style="flex:1;">
+        <label for="searchInput">Meal Name</label>
+        <input type="text" id="searchInput" placeholder="Type a meal name..." onkeydown="if(event.key==='Enter')searchMeal()" />
+      </div>
+      <div style="padding-bottom:1rem;">
+        <button class="btn btn-primary" onclick="searchMeal()">Search</button>
+      </div>
+    </div>
+    <div class="search-result" id="searchResult">
+      <div class="sr-name" id="srName"></div>
+      <div class="divider"></div>
+      <div class="recipe-section">
+        <strong>🥕 Ingredients</strong>
+        <p id="srIngredients"></p>
+      </div>
+      <div class="recipe-section">
+        <strong>👩‍🍳 Instructions</strong>
+        <p id="srInstructions"></p>
+      </div>
+      <div class="recipe-section">
+        <strong>📝 Notes</strong>
+        <p id="srNotes"></p>
+      </div>
+    </div>
+    <div class="msg" id="searchMsg"></div>
+  </div>
+
+  <!-- TAB: LIST ALL -->
+  <div class="card" id="tab-list">
+    <h2>📋 All Recipes</h2>
+    <button class="btn btn-secondary" onclick="listMeals()" style="margin-bottom:1.5rem;">🔄 Refresh List</button>
+    <div id="mealListContainer">
+      <div class="empty-state">
+        <div class="icon">🍽️</div>
+        <p>Click "Refresh List" to load your recipes</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main-wrap -->
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <h3>✏️ Edit Recipe</h3>
+    <input type="hidden" id="editOldName" />
+    <label for="editMealName">Meal Name</label>
+    <input type="text" id="editMealName" maxlength="100" />
+    <label for="editIngredients">Ingredients</label>
+    <textarea id="editIngredients" rows="3"></textarea>
+    <label for="editInstructions">Instructions</label>
+    <textarea id="editInstructions" rows="4"></textarea>
+    <label for="editNotes">Notes</label>
+    <textarea id="editNotes" rows="2"></textarea>
+    <div class="msg" id="editMsg"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-success" onclick="saveEdit()">💾 Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── TAB SWITCHING ── */
+  function showTab(name) {
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+    if (name === 'list') listMeals();
+  }
+
+  /* ── HELPERS ── */
+  function showMsg(id, text, type) {
+    const el = document.getElementById(id);
+    el.textContent = text;
+    el.className = 'msg ' + type;
+    setTimeout(() => { el.className = 'msg'; }, 4000);
+  }
+
+  function renderRecipe(recipe) {
+    if (typeof recipe === 'string') return { ingredients: recipe, instructions: '', notes: '' };
+    return recipe || {};
+  }
+
+  /* ── GET MEAL IDEA ── */
+  function getMealIdea() {
+    const mealType = document.getElementById('mealType').value;
+    fetch('/get_meal_idea', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ meal_type: mealType })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) {
+        document.getElementById('mealResult').classList.remove('show');
+        showMsg('discoverMsg', data.error, 'error');
+        return;
+      }
+      const r = renderRecipe(data.recipe);
+      document.getElementById('resultMealName').textContent = data.meal;
+      document.getElementById('resultIngredients').textContent = r.ingredients || '—';
+      document.getElementById('resultInstructions').textContent = r.instructions || '—';
+      document.getElementById('resultNotes').textContent = r.notes || '—';
+      document.getElementById('resultNotesWrap').style.display = r.notes ? 'block' : 'none';
+      document.getElementById('mealResult').classList.add('show');
+    })
+    .catch(() => showMsg('discoverMsg', 'Something went wrong. Please try again.', 'error'));
+  }
+
+  /* ── ADD MEAL ── */
+  function addMeal() {
+    const mealName    = document.getElementById('addMealName').value.trim();
+    const mealType    = document.getElementById('addMealType').value;
+    const ingredients = document.getElementById('addIngredients').value.trim();
+    const instructions= document.getElementById('addInstructions').value.trim();
+    const notes       = document.getElementById('addNotes').value.trim();
+
+    if (!mealName) { showMsg('addMsg', 'Please enter a meal name.', 'error'); return; }
+
+    fetch('/add_meal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ meal_type: mealType, meal_name: mealName, ingredients, instructions, notes })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { showMsg('addMsg', data.error, 'error'); return; }
+      showMsg('addMsg', data.message, 'success');
+      document.getElementById('addMealName').value = '';
+      document.getElementById('addIngredients').value = '';
+      document.getElementById('addInstructions').value = '';
+      document.getElementById('addNotes').value = '';
+    })
+    .catch(() => showMsg('addMsg', 'Something went wrong. Please try again.', 'error'));
+  }
+
+  /* ── SEARCH MEAL ── */
+  function searchMeal() {
+    const mealName = document.getElementById('searchInput').value.trim();
+    if (!mealName) { showMsg('searchMsg', 'Please enter a meal name to search.', 'error'); return; }
+
+    document.getElementById('searchResult').classList.remove('show');
+    fetch('/search_meal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ meal_name: mealName })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { showMsg('searchMsg', data.error, 'error'); return; }
+      const r = renderRecipe(data.recipe);
+      document.getElementById('srName').textContent = data.meal;
+      document.getElementById('srIngredients').textContent = r.ingredients || '—';
+      document.getElementById('srInstructions').textContent = r.instructions || '—';
+      document.getElementById('srNotes').textContent = r.notes || '—';
+      document.getElementById('searchResult').classList.add('show');
+    })
+    .catch(() => showMsg('searchMsg', 'Something went wrong. Please try again.', 'error'));
+  }
+
+  /* ── LIST MEALS ── */
+  function listMeals() {
+    fetch('/list_meals')
+    .then(r => r.json())
+    .then(data => {
+      const container = document.getElementById('mealListContainer');
+      container.innerHTML = '';
+      const categories = Object.entries(data).filter(([, meals]) => meals.length > 0);
+
+      if (categories.length === 0) {
+        container.innerHTML = '<div class="empty-state"><div class="icon">🍽️</div><p>No recipes yet — add your first one!</p></div>';
+        return;
+      }
+
+      categories.forEach(([category, mealList]) => {
+        const section = document.createElement('div');
+        section.className = 'category-section';
+        section.innerHTML = `<h3>${category}</h3>`;
+        mealList.forEach(meal => {
+          const item = document.createElement('div');
+          item.className = 'meal-item';
+          item.innerHTML = `
+            <span>${meal}</span>
+            <div class="actions">
+              <button class="btn btn-sm btn-edit" onclick="openEditModal('${meal.replace(/'/g,"\\'")}')">✏️ Edit</button>
+              <button class="btn btn-sm btn-danger" onclick="removeMeal('${meal.replace(/'/g,"\\'")}')">🗑️ Remove</button>
+            </div>`;
+          section.appendChild(item);
+        });
+        container.appendChild(section);
+      });
+    });
+  }
+
+  /* ── REMOVE MEAL ── */
+  function removeMeal(mealName) {
+    if (!confirm(`Remove "${mealName}" from your recipe book?`)) return;
+    fetch('/remove_meal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ meal_name: mealName })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      listMeals();
+    });
+  }
+
+  /* ── EDIT MODAL ── */
+  function openEditModal(mealName) {
+    fetch('/get_recipe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ meal_name: mealName })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      const r = renderRecipe(data.recipe);
+      document.getElementById('editOldName').value     = mealName;
+      document.getElementById('editMealName').value    = mealName;
+      document.getElementById('editIngredients').value = r.ingredients || '';
+      document.getElementById('editInstructions').value= r.instructions || '';
+      document.getElementById('editNotes').value       = r.notes || '';
+      document.getElementById('editModal').classList.add('open');
+    });
+  }
+
+  function closeModal() {
+    document.getElementById('editModal').classList.remove('open');
+    document.getElementById('editMsg').className = 'msg';
+  }
+
+  document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  function saveEdit() {
+    const oldName     = document.getElementById('editOldName').value;
+    const newName     = document.getElementById('editMealName').value.trim();
+    const ingredients = document.getElementById('editIngredients').value.trim();
+    const instructions= document.getElementById('editInstructions').value.trim();
+    const notes       = document.getElementById('editNotes').value.trim();
+
+    if (!newName) { showMsg('editMsg', 'Meal name cannot be empty.', 'error'); return; }
+
+    fetch('/edit_meal', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ old_meal_name: oldName, new_meal_name: newName, ingredients, instructions, notes })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { showMsg('editMsg', data.error, 'error'); return; }
+      closeModal();
+      listMeals();
+    });
+  }
+</script>
+</body>
+</html>
