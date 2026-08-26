@@ -12,7 +12,7 @@
       "Enchiladas"
     ],
     "dessert": [
-      "cinnamon rolls"
+      "Cinnamon rolls"
     ],
     "bread and muffins": [
       "Sourdough Bread",
@@ -33,11 +33,6 @@
     },
     "BBQ Chicken Pizza": {
       "ingredients": "Ingredients: Chicken, BBQ Sauce, Onion, Mozzerella Cheese. Instructions: Stuff.",
-      "instructions": "",
-      "notes": ""
-    },
-    "cinnamon rolls": {
-      "ingredients": "Ingredients: Stuff. Instructions: Stuff. Notes: .",
       "instructions": "",
       "notes": ""
     },
@@ -63,6 +58,11 @@
     },
     "Enchiladas": {
       "ingredients": "Ingredients: Cheese, Tortillas, Refried Beans, Chicken, Green Enchilada Sauce.",
+      "instructions": "",
+      "notes": ""
+    },
+    "Cinnamon rolls": {
+      "ingredients": "Ingredients: Stuff. Instructions: Stuff. Notes: .",
       "instructions": "",
       "notes": ""
     }
