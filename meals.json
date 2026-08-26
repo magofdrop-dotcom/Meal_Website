@@ -2,7 +2,8 @@
   "meals": {
     "breakfast": [
       "Pancakes",
-      "Cereal"
+      "Cereal",
+      "Test Receipe"
     ],
     "lunch": [
       "Black Bean Wraps"
@@ -63,6 +64,11 @@
     },
     "Enchiladas": {
       "ingredients": "Ingredients: Cheese, Tortillas, Refried Beans, Chicken, Green Enchilada Sauce.",
+      "instructions": "",
+      "notes": ""
+    },
+    "Test Receipe": {
+      "ingredients": "",
       "instructions": "",
       "notes": ""
     }
