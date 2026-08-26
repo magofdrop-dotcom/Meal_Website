@@ -3,12 +3,58 @@ import random
 import json
 import os
 import threading
+import base64
+import requests
 
 app = Flask(__name__)
 
 VALID_CATEGORIES = {"breakfast", "lunch", "dinner", "dessert", "bread and muffins"}
 DATA_FILE = "meals.json"
 _lock = threading.Lock()
+
+# --- GitHub auto-save config ---
+# These come from environment variables you'll set in Render (never hardcode a token in code).
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+GITHUB_REPO = os.environ.get("GITHUB_REPO")  # format: "yourusername/Meal_Website"
+GITHUB_BRANCH = os.environ.get("GITHUB_BRANCH", "main")
+GITHUB_FILE_PATH = "meals.json"  # path to the file inside the repo
+
+
+def push_to_github(content_dict):
+    """Push the current meals.json content to GitHub so it survives server restarts."""
+    if not GITHUB_TOKEN or not GITHUB_REPO:
+        # Not configured yet — skip silently so local/dev use still works without a token.
+        return
+
+    api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FILE_PATH}"
+    headers = {
+        "Authorization": f"Bearer {GITHUB_TOKEN}",
+        "Accept": "application/vnd.github+json",
+    }
+
+    try:
+        # GitHub requires the current file's SHA to update it (like a version check).
+        get_resp = requests.get(f"{api_url}?ref={GITHUB_BRANCH}", headers=headers, timeout=10)
+        sha = get_resp.json().get("sha") if get_resp.status_code == 200 else None
+
+        encoded_content = base64.b64encode(
+            json.dumps(content_dict, indent=2).encode("utf-8")
+        ).decode("utf-8")
+
+        payload = {
+            "message": "Update meals.json via site edit",
+            "content": encoded_content,
+            "branch": GITHUB_BRANCH,
+        }
+        if sha:
+            payload["sha"] = sha
+
+        put_resp = requests.put(api_url, headers=headers, json=payload, timeout=10)
+        if put_resp.status_code not in (200, 201):
+            print(f"GitHub push failed: {put_resp.status_code} {put_resp.text}")
+    except requests.RequestException as e:
+        # Don't crash the app if GitHub is unreachable — just log it.
+        print(f"GitHub push error: {e}")
 
 
 def load_data():
@@ -34,6 +80,9 @@ def save_data(meals, recipes):
     with open(tmp, "w") as f:
         json.dump({"meals": meals, "recipes": recipes}, f, indent=2)
     os.replace(tmp, DATA_FILE)  # atomic write — avoids corruption on crash
+
+    # Also push to GitHub so the change survives a server restart/redeploy.
+    push_to_github({"meals": meals, "recipes": recipes})
 
 
 meals, recipes = load_data()
