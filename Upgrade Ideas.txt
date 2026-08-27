@@ -1,6 +1,0 @@
-1) Can add a picture of Rachel and I and make the website look prettier? Use bootstrap.
-2) Add a text document explaining each line of code so that it is all documented and easier for me to learn from.
-3) Change the website name that you put in the search bar? Github?
-4) Auto clear inputs after hitting button.
-5) The list feature can expand to see the ingredients and notes etc.. and instead of re-adding the entire new thing auto populate the old version and allow the user to edit it. And only edit the portion they want instead of having to edit each part. So an edit button attached to the ingredients section, the notes section, etc...
-6) Order the list differently so it goes Breakfast, Lunch, Dinner, Desserts, Bread and Muffins and so that they are capitalized. 

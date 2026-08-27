@@ -8,7 +8,7 @@ import requests
 
 app = Flask(__name__)
 
-VALID_CATEGORIES = {"breakfast", "lunch", "dinner", "dessert", "bread and muffins"}
+VALID_CATEGORIES = {"breakfast", "lunch", "dinner", "dessert", "bread and muffins", "christmas cookies"}
 DATA_FILE = "meals.json"
 _lock = threading.Lock()
 
