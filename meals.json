@@ -5,7 +5,8 @@
       "Cereal"
     ],
     "lunch": [
-      "Black Bean Wraps"
+      "Black Bean Wraps",
+      "Refried Beans"
     ],
     "dinner": [
       "BBQ Chicken Pizza",
@@ -65,6 +66,11 @@
       "ingredients": "Ingredients: Stuff. Instructions: Stuff. Notes: .",
       "instructions": "",
       "notes": ""
+    },
+    "Refried Beans": {
+      "ingredients": "- 2 cups dry pinto beans\n- 2 teaspoons extra virgin olive oil\n- 1 small yellow onion(diced)\n- 1 jalepeno\n- 3 cloves garlic\n-2 bay leaves\n- 4 cups low sodium chicken stock\n- 3 cups water\n- 1 1/2 teaspoons kosher salt\n- 1 teaspoon ground cumin\n- 1 teaspoon dried oregano\n- 1/8 to 1/4 teaspoon ceyanne pepper",
+      "instructions": "1) Rinse the beans\n2) Set the instant pot to saute, add the oil, once it is hot add the jalepeno and garlic, cook for 30 seconds, splash some chicken broth and scrape the any sticking food, add the remaining chicken stock, water, bay leaves, salt, cumin, oregano, cayenne, and the rinsed beans, lightly stir. \n3) Cook on high for 45 minutes then let the pressure release naturally for 25 minutes then vent to release any remaining pressure.\n4) Discard the bay leaves, save 2 cups of the bean liquid and strain the rest.\n5) Puree the beans(adding liquid as needed for your desired consistency).\n6) Add additional seasonings as desired.",
+      "notes": "Receipe from Brad and Kristen: https://www.wellplated.com/instant-pot-refried-beans/"
     }
   }
 }
